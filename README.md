@@ -17,7 +17,7 @@ Install the dependencies and start the server.
 
 ```sh
 git clone https://github.com/victorbakan/vpodobaika-upload.git
-cd vpodobaika-upload/docker/api-service
+cd vpodobaika-upload/docker/vpodobaika-upload
 pip3 install -r code/req.txt
 python3 code/vpodobaika.py --port 3333 --address 0.0.0.0 --processes 2 --debug=true
 ```
@@ -36,7 +36,7 @@ build the image.
 
 ```sh
 git clone https://github.com/victorbakan/vpodobaika-upload.git
-cd vpodobaika-upload/docker/api-service
+cd vpodobaika-upload/docker/vpodobaika-upload
 docker build -f Dockerfile ./ --tag vpodobaika-upload:${YOUR_TAG}
 ```
 
@@ -74,7 +74,7 @@ This command will build dockers and run them
 IMPORTANT!!!!
 Docker compose goes with 2 dockers:
 - nginx: used as a reverse proxy + rate limit public traffic per IP, up to 10r/s by default
-- api-service: service itselfe that is behind nginx and accepts requests only from nginx 
+- vpodobaika-upload: service itselfe that is behind nginx and accepts requests only from nginx 
 
 
 To provide test you may use simple curl cummand in a loop.
