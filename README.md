@@ -1,13 +1,14 @@
-# Vpodobaika2.0
+# vpodobaika-upload
 ## _The Simple Flask REST web server, Ever_
 
 It can upload file with json type and print it in on web browser page
 
+![Build Status](https://github.com/victorbakan/vpodobaika-upload/actions/workflows/vpodobaika-upload-main.yaml/badge.svg)
 
 
 ## Installation and Start (without docker)
 
-Vpodobaika requires 
+vpodobaika-upload requires 
 > Flask
 
 > Python >= 3.7.3
@@ -15,17 +16,17 @@ Vpodobaika requires
 Install the dependencies and start the server.
 
 ```sh
-git clone https://github.com/victorbakan/vpodobaika.git
-cd vpodobaika
-pip3 install -r code/requirements.txt
+git clone https://github.com/victorbakan/vpodobaika-upload.git
+cd vpodobaika-upload/docker/api-service
+pip3 install -r code/req.txt
 python3 code/vpodobaika.py --port 3333 --address 0.0.0.0 --processes 2 --debug=true
 ```
 
 ## Docker
-Vpodobaika is very easy to install and deploy in a Docker container.
+vpodobaika-upload is very easy to install and deploy in a Docker container.
 
 We have regular automatic builds for this application and you can find up to date and ready to use docker image 
-> [Our docker repository](https://hub.docker.com/r/bakan/vpodobaika) 
+> [Our docker repository](https://hub.docker.com/r/bakan/vpodobaika-upload)
 
 or build it by yourself - it's very easy
 
@@ -34,9 +35,9 @@ Dockerfile if necessary. When ready, simply use the Dockerfile to
 build the image.
 
 ```sh
-git clone https://github.com/victorbakan/vpodobaika.git
-cd vpodobaika
-docker build -f Dockerfile ./ --tag vpodobaika:${YOUR_TAG}
+git clone https://github.com/victorbakan/vpodobaika-upload.git
+cd vpodobaika-upload/docker/api-service
+docker build -f Dockerfile ./ --tag vpodobaika-upload:${YOUR_TAG}
 ```
 
 This will create the vpodobaika image and pull in the necessary dependencies.
@@ -51,7 +52,7 @@ With docker run you can also use any additional option of the vpodobaika applica
 > `--processes 2`
 
 ```sh
-docker run -d --restart=always --name vpodobaika -p 3333:8030/tcp vpodobaika:latest --port 8030 --processes 2
+docker run -d --restart=always --name vpodobaika-upload -p 3333:8030/tcp vpodobaika-upload:latest --port 8030 --processes 2
 ```
 > Note: You can change ENTRYPOINT to CDM in Dockerfile to have more flaxability how to start/run docker container. ENTRYPOINT is by default
 
@@ -77,4 +78,6 @@ Docker compose goes with 2 dockers:
 
 
 To provide test you may use simple curl cummand in a loop.
-> while true; do curl -I  http://NGINX_PUBLIC_IP:NGINX_PUBLIC_PORT/; done
+```sh
+while true; do curl -I  http://NGINX_PUBLIC_IP:NGINX_PUBLIC_PORT/; done
+```
