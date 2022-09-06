@@ -12,6 +12,6 @@ services:
   vpodobaika-upload:
     build:
       dockerfile: Dockerfile
-      context: ./api-service
+      context: ./vpodobaika-upload
     depends_on:
       - nginx
