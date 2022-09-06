@@ -1,0 +1,25 @@
+name: vpodobaika-upload
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Repository checkout
+      uses: actions/checkout@v2
+
+    - name: Build and push Docker images
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: bakan/vpodobaika-upload
+        tags: 1.0.${{ github.run_number }}, latest
+        registry: ${{ secrets.DOCKER_REGISTRY }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        buildArgs: SOME_KEY=1

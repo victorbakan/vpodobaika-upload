@@ -33,9 +33,9 @@ RUN pip install -r req.txt
 #
 # Example with CMD: you will be able to put only additional flags of the vpodobaika.py application
 #
-# For example: docker run -it --name vpodobaika -p 3333:8384/tcp vpodobaika:latest --port 8384 --processes 2
+# For example: docker run -it --name vpodobaika -p 3333:8384/tcp vpodobaika-upload:latest --port 8384 --processes 2
 
-ENTRYPOINT ["python3.7", "vpodobaika.py"]
+ENTRYPOINT ["python3.7", "vpodobaika-upload.py"]
 
 # 
 # !!!!! FOR DEVELOPMENT ONLY!!!!!!
@@ -44,6 +44,6 @@ ENTRYPOINT ["python3.7", "vpodobaika.py"]
 #
 # Example with CMD: you will be able to put anything like /bin/bash
 #
-# docker run -it --name vpodobaika -p 3333:3333/tcp vpodobaika:latest /bin/bash
+# docker run -it --name vpodobaika -p 3333:3333/tcp vpodobaika-upload:latest /bin/bash
 
-#CMD ["python3.7", "vpodobaika.py"]
+#CMD ["python3.7", "vpodobaika-upload.py"]
