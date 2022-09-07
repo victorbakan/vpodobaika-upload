@@ -81,3 +81,11 @@ To provide test you may use simple curl cummand in a loop.
 ```sh
 while true; do curl -I  http://NGINX_PUBLIC_IP:NGINX_PUBLIC_PORT/; done
 ```
+
+## FINALTY
+
+When the serviceis started successfully you can upload json file and check it output
+> Ex with curl
+```sh
+curl -X POST http://127.0.0.1:8030/uploader -F file=@devops_interview_terraform_state.json  | jq .
+```

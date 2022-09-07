@@ -1,22 +1,17 @@
+try:
+   from flask import Flask, render_template, request, flash, redirect, url_for
+except ImportError:
+   print('No module! Run:\n  pip3 install flask')
+   exit(3)
+
 import argparse, json
 import logging
 import os, sys
 
 from argparse import ArgumentParser
 
-
-try:
-   from flask import Flask
-except ImportError:
-   print('No module! Run:\n  pip3 install flask')
-   exit(3)
-
-try:
-   from prometheus_flask_exporter import PrometheusMetrics
-except ImportError:
-   print('No module! Run:\n  pip3 install prometheus_flask_exporter')
-   exit(3)
-
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import  FileStorage
 
 from socket import error as SocketError
 import errno
@@ -53,31 +48,27 @@ parser.add_argument('--debug',
 
 args = parser.parse_args()
 
-k8sConfigMapTest = os.environ.get('K8S_CONF_TEST', 'False')
+UPLOAD_FOLDER = 'files'
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-api = Flask("DevOpsRocketTask")
+@app.route('/')
+def upload():
+   return render_template('upload.html')
 
+@app.route('/uploader', methods = ['GET', 'POST'])
+def uploader():
+  if request.method == 'POST':
+    f = request.files['file']
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
 
-@api.route('/')
-def index():
-    try:
-      return "This is index latest page <a href=/companies>Check Companies</a><br><br>K8S_CONF_TEST = "+k8sConfigMapTest
-    except Exception as e:
-      return "Error on index page"
+    root_dir = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(root_dir, UPLOAD_FOLDER, f.filename)
+    data = json.load(open(json_url))
 
-
-#metrics = PrometheusMetrics(api)
-#metrics.info('app_info', 'Application info', version='1.0.0')
-#@metrics.gauge('in_progress', 'Long running requests in progress')
-
-@api.route('/companies', methods=['GET','POST','DELETE'])
-def companies():
-  companies = [{"id": 1, "name": "Company One"}, {"id": 2, "name": "Company Two"}]
-  return json.dumps(companies)
-
-
-
+    return data
 
 
 
@@ -90,8 +81,8 @@ if __name__ == '__main__':
 
   logger = logging.getLogger()
 
-  logger.info(f' * Starting app, Debug mode = {args.debug}')
+  logger.info(f' * Starting app')
 
-  api.run(args.address, args.port, processes=args.processes, threaded=args.threaded, debug=args.debug)
+  app.run(args.address, args.port, processes=args.processes, threaded=args.threaded, debug=args.debug)
 
-#
+
