@@ -17,7 +17,6 @@ jobs:
     - name: Build and push Docker images
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        context: docker/vpodobaika-upload
         image: bakan/vpodobaika-upload
         tags: 1.0.${{ github.run_number }}, latest
         registry: ${{ secrets.DOCKER_REGISTRY }}
